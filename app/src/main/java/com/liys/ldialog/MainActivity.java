@@ -2,6 +2,7 @@ package com.liys.ldialog;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 
 import com.liys.dialoglib.LDialog;
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         LDialog dialog = new LDialog(this, R.layout.dialog_confirm); //设置你的布局
         dialog.with()
+                .setGravity(Gravity.BOTTOM)
+                .setWidthRatio(1)
+                .setAnimationsStyle(R.style.dialog_translate)
                 //设置布局控件的值
                 .setText(R.id.tv_content, "确定要退出登录吗？")
                 .setCancelBtn(R.id.tv_cancel)
