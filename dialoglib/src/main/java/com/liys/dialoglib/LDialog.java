@@ -68,6 +68,8 @@ public class LDialog extends Dialog{
         width = (int)(ScreenUtils.getWidthPixels(context)*0.8);
         height = WindowManager.LayoutParams.WRAP_CONTENT;
         setWidthHeight();
+        getWindow().setWindowAnimations(R.style.dialog_alpha);
+//        getWindow().setWindowAnimations(R.style.dialog_translate);
     }
 
     public LDialog with(){
@@ -75,6 +77,32 @@ public class LDialog extends Dialog{
         dismiss();
         return this;
     }
+
+//    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置动画>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    public void setAnimationsStyle(int style){
+        getWindow().setWindowAnimations(style);
+    }
+
+//    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置位置>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    /**
+     * 设置位置
+     * @param gravity
+     * @param offX
+     * @param offY
+     */
+    public LDialog setGravity(int gravity, int offX, int offY){
+        setGravity(gravity);
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.x = offX;
+        layoutParams.y = offY;
+        getWindow().setAttributes(layoutParams);
+        return this;
+    }
+    public LDialog setGravity(int gravity){
+        getWindow().setGravity(gravity);
+        return this;
+    }
+
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置背景>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     private LDialog setbg(){

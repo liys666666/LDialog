@@ -10,6 +10,18 @@
         <item name="android:windowFrame">@null</item>
         <!--是否浮现在activity之上-->
         <item name="android:windowIsFloating">true</item>
+
+    </style>
+
+
+    <style name="dialog_alpha" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_alpha_show</item>  <!--显示动画-->
+        <item name="android:windowExitAnimation">@anim/dialog_alpha_cancel</item> <!--消失动画-->
+    </style>
+
+    <style name="dialog_translate" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_translate_show</item>  <!--显示动画-->
+        <item name="android:windowExitAnimation">@anim/dialog_translate_cancel</item> <!--消失动画-->
     </style>
 
 </resources>
