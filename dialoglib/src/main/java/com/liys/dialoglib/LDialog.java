@@ -79,8 +79,9 @@ public class LDialog extends Dialog{
     }
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置动画>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    public void setAnimationsStyle(int style){
+    public LDialog setAnimationsStyle(int style){
         getWindow().setWindowAnimations(style);
+        return this;
     }
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置位置>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
