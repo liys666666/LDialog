@@ -45,7 +45,7 @@ public class LDialog extends Dialog{
     }
 
     public LDialog(@NonNull Context context, int layoutId) {
-        this(context, layoutId, R.style.CustomDialog);
+        this(context, layoutId, R.style.LDialog);
     }
 
     public LDialog(@NonNull Context context, int layoutId, int themeResId) {
