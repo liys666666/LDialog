@@ -3,7 +3,6 @@ package com.liys.ldialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.liys.dialoglib.LDialog;
 
@@ -25,11 +24,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCancelBtn(R.id.tv_cancel)
                 .setOnClickListener(new LDialog.DialogOnClickListener() {
                     @Override
-                    public void onClick(View v, LDialog lDialog) {
+                    public void onClick(View v, LDialog lDialog) { //可以根据viewId判断
                         lDialog.dismiss();
-                        Toast.makeText(MainActivity.this, "确定", Toast.LENGTH_SHORT).show();
                     }
-                }, R.id.tv_confirm)
+                }, R.id.tv_confirm, R.id.tv_content) //可以设多控件
                 .show();
     }
 
@@ -47,11 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                .setHeightPX() //单位:px
 //                .setHeightRatio() //占屏幕高比例
 //
-//                //设置背景
+//                //3.设置背景
 //                .setBgColor(Color.WHITE) //背景颜色
 //                .setBgColorRes(R.color.white) //res资源
 //                .setBgRadius() //圆角, 单位：dp
 //                .setBgRadiusPX() //圆角, 单位：px
+//
+//                //4.设置弹框位置 和 动画(显示和隐藏动画)
+//                .setGravity(Gravity.TOP | Gravity.BOTTOM) //设置弹框位置
+//                .setGravity(Gravity.TOP | Gravity.BOTTOM, 0, 0) //设置弹框位置(偏移量)
+//                .setAnimationsStyle(R.style.dialog_translate) //设置动画
 //
 //                //3.设置具体布局
 //                //3.1 常见系统View属性
