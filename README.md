@@ -1,3 +1,5 @@
+
+#使用详情:[https://www.jianshu.com/p/4ab3462b3056](https://www.jianshu.com/p/4ab3462b3056)
 ```aidl
 //项目根目录下 build.gradle
 allprojects {
