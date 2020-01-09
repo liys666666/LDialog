@@ -53,11 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //                //4.设置弹框位置 和 动画(显示和隐藏动画)
 //                .setGravity(Gravity.TOP | Gravity.BOTTOM) //设置弹框位置
-//                .setGravity(Gravity.TOP | Gravity.BOTTOM, 0, 0) //设置弹框位置(偏移量)
+//                .setGravity(Gravity.LEFT, 0, 0) //设置弹框位置(偏移量)
 //                .setAnimationsStyle(R.style.dialog_translate) //设置动画
 //
-//                //3.设置具体布局
-//                //3.1 常见系统View属性
+//                //5.设置具体布局
+//                //5.1 常见系统View属性
 //                .setText(R.id.tv_title, "确定")
 //                .setTextColor()
 //                .setBackgroundColor()
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                .setImageBitmap()
 //                .setVisible()
 //                .setGone()
-//                //3.2 其它属性
+//                //5.2 其它属性
 //                .setCancelBtn(R.id.tv_cancel) //设置按钮，弹框消失的按钮
 //                .setOnClickListener(new LDialog.DialogOnClickListener() { //设置按钮监听
 //                    @Override
