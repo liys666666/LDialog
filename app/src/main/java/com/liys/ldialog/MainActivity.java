@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setGravity(Gravity.BOTTOM)
                 .setWidthRatio(1)
                 .setAnimationsStyle(R.style.dialog_translate)
+                .setTransparentValue(0.5f)
                 //设置布局控件的值
                 .setText(R.id.tv_content, "确定要退出登录吗？")
                 .setCancelBtn(R.id.tv_cancel)

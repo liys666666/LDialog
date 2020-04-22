@@ -105,8 +105,18 @@ public class LDialog extends Dialog{
     }
 
 
+    /**
+     * 设置透明度
+     * @param value 0-1f
+     * @return
+     */
+    public LDialog setTransparentValue(float value){
+        getWindow().setDimAmount(value);
+        return this;
+    }
+
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置背景>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    private LDialog setbg(){
+    private LDialog setBg(){
         getWindow().setBackgroundDrawable(getRoundRectDrawable(bgRadius, bgColor));
         return this;
     }
@@ -117,12 +127,12 @@ public class LDialog extends Dialog{
      */
     public LDialog setBgColor(int color){
         bgColor = color;
-        return setbg();
+        return setBg();
     }
 
     public LDialog setBgColorRes(int colorRes){
         bgColor = context.getResources().getColor(colorRes);
-        return setbg();
+        return setBg();
     }
 
     /**
@@ -131,7 +141,7 @@ public class LDialog extends Dialog{
      */
     public LDialog setBgRadius(int bgRadius){
         this.bgRadius = DensityUtils.dp2px(context, bgRadius);
-        return setbg();
+        return setBg();
     }
 
     /**
@@ -140,7 +150,7 @@ public class LDialog extends Dialog{
      */
     public LDialog setBgRadiusPX(int bgRadius){
         this.bgRadius = bgRadius;
-        return setbg();
+        return setBg();
     }
 
 
