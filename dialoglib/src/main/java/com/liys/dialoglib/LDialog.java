@@ -106,11 +106,11 @@ public class LDialog extends Dialog{
 
 
     /**
-     * 设置透明度
+     * 遮罩透明度
      * @param value 0-1f
      * @return
      */
-    public LDialog setTransparentValue(float value){
+    public LDialog setMaskValue(float value){
         getWindow().setDimAmount(value);
         return this;
     }

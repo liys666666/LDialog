@@ -11,13 +11,14 @@ allprojects {
 ```
 ```aidl
 dependencies {
-     implementation 'com.github.liys666666:LDialog:V1.0.3'  //添加
+     implementation 'com.github.liys666666:LDialog:V1.0.4'  //添加
 }
 ```
 
 ```
 LDialog dialog = new LDialog(this, R.layout.dialog_confirm); //你的布局
         dialog.with()  //必须
+                .setMaskValue(0.5f) //遮罩--透明度
                 //1.设置宽
                 .setWidth() //单位:dp
                 .setWidthPX() //单位:px
