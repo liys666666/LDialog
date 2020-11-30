@@ -260,15 +260,23 @@ public class LDialog extends Dialog{
     public LDialog setOnClickListener(final DialogOnClickListener onClickListener, int... viewIds){
         final LDialog lDialog = this;
         for (int i = 0; i < viewIds.length; i++) {
-            getView(viewIds[i]).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(cancelIds.contains(v.getId())){
+            if(cancelIds.contains(viewIds[i])){
+                getView(viewIds[i]).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickListener.onClick(v, lDialog);
                         lDialog.dismiss();
                     }
-                    onClickListener.onClick(v, lDialog);
-                }
-            });
+                });
+            }else{
+                getView(viewIds[i]).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickListener.onClick(v, lDialog);
+                    }
+                });
+            }
+
         }
         return this;
     }
