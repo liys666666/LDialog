@@ -15,7 +15,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.util.SparseArray;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -39,6 +41,7 @@ public class LDialog extends Dialog{
     private Context context;
     private SparseArray<View> views = new SparseArray<>();
     private List<Integer> cancelIds = new ArrayList<>();
+    private View rootView;
     private int layoutId = 0;
     private int width = 0;
     private int height = 0;
@@ -62,8 +65,11 @@ public class LDialog extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layoutId);
+        rootView = LayoutInflater.from(context).inflate(layoutId, null);
+        setContentView(rootView);
+//        setContentView(layoutId);
         init();
+
     }
 
     private void init() {
@@ -204,11 +210,15 @@ public class LDialog extends Dialog{
      * 设置宽高
      */
     private LDialog setWidthHeight(){
-        Window dialogWindow = getWindow();
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = width;
-        lp.height = height;
-        dialogWindow.setAttributes(lp);
+//        Window dialogWindow = getWindow();
+//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        lp.width = width;
+//        lp.height = height;
+//        dialogWindow.setAttributes(lp);
+        ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = height;
+        rootView.setLayoutParams(layoutParams);
         return this;
     }
 
