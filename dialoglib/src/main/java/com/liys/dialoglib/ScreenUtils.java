@@ -11,7 +11,7 @@ import android.util.DisplayMetrics;
  * @author liys
  * @version 1.0  2017/07/29
  */
-public class ScreenUtils {
+class ScreenUtils {
     /** 1.获取屏幕宽度(单位px) */
     public static int getWidthPixels(Context context){
         return context.getResources().getDisplayMetrics().widthPixels;

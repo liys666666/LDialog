@@ -2,9 +2,11 @@ package com.liys.ldialog;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
+import com.liys.dialoglib.LAnimationsType;
 import com.liys.dialoglib.LDialog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,17 +22,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         LDialog dialog = new LDialog(this, R.layout.dialog_confirm); //设置你的布局
         dialog.with()
-                .setGravity(Gravity.BOTTOM)
+                .setGravity(Gravity.CENTER)
+                .setAnimations(LAnimationsType.BOTTOM)
                 .setWidthRatio(1)
-                .setAnimationsStyle(R.style.dialog_translate)
+                //.setAnimationsStyle(R.style.dialog_translate)
                 .setMaskValue(0.5f)
                 //设置布局控件的值
                 .setText(R.id.tv_content, "确定要退出登录吗？")
-                .setCancelBtn(R.id.tv_cancel)
+                .setCancelBtn(R.id.tv_cancel, R.id.tv_confirm)
                 .setOnClickListener(new LDialog.DialogOnClickListener() {
                     @Override
                     public void onClick(View v, LDialog lDialog) { //可以根据viewId判断
-                        lDialog.dismiss();
+                        Log.d("66", "点击");
                     }
                 }, R.id.tv_confirm, R.id.tv_content) //可以设多控件
                 .show();

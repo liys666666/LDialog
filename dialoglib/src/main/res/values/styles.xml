@@ -13,15 +13,39 @@
 
     </style>
 
-
-    <style name="dialog_alpha" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/dialog_alpha_show</item>  <!--显示动画-->
-        <item name="android:windowExitAnimation">@anim/dialog_alpha_cancel</item> <!--消失动画-->
+<!--    动画 -->
+<!--    默认 -->
+    <style name="li_dialog_default" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/li_dialog_default_show</item>  <!--显示动画-->
+        <item name="android:windowExitAnimation">@anim/li_dialog_default_cancel</item> <!--消失动画-->
+    </style>
+<!--    默认 -->
+    <style name="li_dialog_scale" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/li_dialog_scale_show</item>  <!--显示动画-->
+        <item name="android:windowExitAnimation">@anim/li_dialog_scale_cancel</item> <!--消失动画-->
     </style>
 
-    <style name="dialog_translate" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/dialog_translate_show</item>  <!--显示动画-->
-        <item name="android:windowExitAnimation">@anim/dialog_translate_cancel</item> <!--消失动画-->
+<!--    left -->
+    <style name="li_dialog_translate_left" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/li_dialog_translate_left_show</item>
+        <item name="android:windowExitAnimation">@anim/li_dialog_translate_left_cancel</item>
     </style>
 
+<!--    top -->
+    <style name="li_dialog_translate_top" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/li_dialog_translate_top_show</item>
+        <item name="android:windowExitAnimation">@anim/li_dialog_translate_top_cancel</item>
+    </style>
+
+<!--    right -->
+    <style name="li_dialog_translate_right" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/li_dialog_translate_right_show</item>
+        <item name="android:windowExitAnimation">@anim/li_dialog_translate_right_cancel</item>
+    </style>
+
+<!--    bottom -->
+    <style name="li_dialog_translate_bottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/li_dialog_translate_bottom_show</item>
+        <item name="android:windowExitAnimation">@anim/li_dialog_translate_bottom_cancel</item>
+    </style>
 </resources>

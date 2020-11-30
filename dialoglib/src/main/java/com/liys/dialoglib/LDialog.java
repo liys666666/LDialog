@@ -14,12 +14,16 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description: 万能Dialog
@@ -34,6 +38,7 @@ public class LDialog extends Dialog{
 
     private Context context;
     private SparseArray<View> views = new SparseArray<>();
+    private List<Integer> cancelIds = new ArrayList<>();
     private int layoutId = 0;
     private int width = 0;
     private int height = 0;
@@ -63,12 +68,12 @@ public class LDialog extends Dialog{
 
     private void init() {
         setCanceledOnTouchOutside(true);
-        getWindow().setBackgroundDrawable(getRoundRectDrawable(DensityUtils.dp2px(context, 5), Color.WHITE));
+        getWindow().setBackgroundDrawable(getRoundRectDrawable(dp2px(context, 5), Color.WHITE));
 
         width = (int)(ScreenUtils.getWidthPixels(context)*0.8);
         height = WindowManager.LayoutParams.WRAP_CONTENT;
         setWidthHeight();
-        getWindow().setWindowAnimations(R.style.dialog_alpha);
+        getWindow().setWindowAnimations(R.style.li_dialog_default);
 //        getWindow().setWindowAnimations(R.style.dialog_translate);
     }
 
@@ -79,8 +84,47 @@ public class LDialog extends Dialog{
     }
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置动画>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    /**
+     * 自定义动画
+     * @param style
+     * @return
+     */
     public LDialog setAnimationsStyle(int style){
         getWindow().setWindowAnimations(style);
+        return this;
+    }
+
+    /**
+     * 内置动画
+     * @param styleType 类型
+     * @return
+     */
+    public LDialog setAnimations(@LAnimationsType.AAnimationsType String styleType){
+        int style = -1;
+        switch (styleType){
+            case LAnimationsType.DEFAULT: //默认
+                style = R.style.li_dialog_default;
+                break;
+            case LAnimationsType.SCALE:
+                style = R.style.li_dialog_scale;
+                break;
+            case LAnimationsType.LEFT:
+                style = R.style.li_dialog_translate_left;
+                break;
+            case LAnimationsType.TOP:
+                style = R.style.li_dialog_translate_top;
+                break;
+            case LAnimationsType.RIGHT:
+                style = R.style.li_dialog_translate_right;
+                break;
+            case LAnimationsType.BOTTOM:
+                style = R.style.li_dialog_translate_bottom;
+                break;
+        }
+        if(style!=-1){
+            setAnimationsStyle(style);
+        }
         return this;
     }
 
@@ -140,7 +184,7 @@ public class LDialog extends Dialog{
      * @param bgRadius
      */
     public LDialog setBgRadius(int bgRadius){
-        this.bgRadius = DensityUtils.dp2px(context, bgRadius);
+        this.bgRadius = dp2px(context, bgRadius);
         return setBg();
     }
 
@@ -169,7 +213,7 @@ public class LDialog extends Dialog{
     }
 
     public LDialog setWidth(int width){
-        this.width = DensityUtils.dp2px(context, width);
+        this.width = dp2px(context, width);
         return setWidthHeight();
     }
 
@@ -179,7 +223,7 @@ public class LDialog extends Dialog{
     }
 
     public LDialog setHeight(int height){
-        this.height = DensityUtils.dp2px(context, height);
+        this.height = dp2px(context, height);
         return setWidthHeight();
     }
     public LDialog setHeightPX(int height){
@@ -219,6 +263,9 @@ public class LDialog extends Dialog{
             getView(viewIds[i]).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(cancelIds.contains(v.getId())){
+                        lDialog.dismiss();
+                    }
                     onClickListener.onClick(v, lDialog);
                 }
             });
@@ -228,16 +275,22 @@ public class LDialog extends Dialog{
 
     /**
      * 设置 关闭dialog的按钮
-     * @param viewId
+     * @param viewIds
      * @return
      */
-    public LDialog setCancelBtn(int viewId){
-        getView(viewId).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
+    public LDialog setCancelBtn(int... viewIds){
+        for (int i = 0; i < viewIds.length; i++) {
+            if(cancelIds.contains(viewIds[i])){
+               continue;
             }
-        });
+            cancelIds.add(viewIds[i]);
+            getView(viewIds[i]).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+        }
         return this;
     }
 
@@ -408,6 +461,11 @@ public class LDialog extends Dialog{
 //        drawable.setStroke(isFill ? 0 : strokeWidth, color);
 //        return drawable;
 //    }
+
+    /** dp转px */
+    public static int dp2px(Context context, float dpVal){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpVal, context.getResources().getDisplayMetrics());
+    }
 
     public interface DialogOnClickListener{
         void onClick(View v, LDialog lDialog);

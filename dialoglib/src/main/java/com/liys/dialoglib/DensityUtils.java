@@ -8,7 +8,7 @@ import android.util.TypedValue;
  * @author liys
  * @version 1.0  2017/07/29
  */
-public class DensityUtils {
+class DensityUtils {
     /** dp转px */
     public static int dp2px(Context context, float dpVal){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpVal, context.getResources().getDisplayMetrics());

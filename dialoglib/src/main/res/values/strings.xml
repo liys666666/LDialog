@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">DialogLib</string>
+
+<!--    动画时间(单位：毫秒)-->
+    <string name="li_dialog_duration_default">200</string>
+    <string name="li_dialog_duration_scale">200</string>
+    <string name="li_dialog_duration_left">200</string>
+    <string name="li_dialog_duration_top">200</string>
+    <string name="li_dialog_duration_right">200</string>
+    <string name="li_dialog_duration_bottom">200</string>
 </resources>
