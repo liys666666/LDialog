@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -18,7 +19,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
@@ -41,7 +41,7 @@ public class LDialog extends Dialog{
     private Context context;
     private SparseArray<View> views = new SparseArray<>();
     private List<Integer> cancelIds = new ArrayList<>();
-    private View rootView;
+    private LDialogRootView controlView;
     private int layoutId = 0;
     private int width = 0;
     private int height = 0;
@@ -65,16 +65,17 @@ public class LDialog extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rootView = LayoutInflater.from(context).inflate(layoutId, null);
-        setContentView(rootView);
-//        setContentView(layoutId);
+        controlView = new LDialogRootView(context);
+        View view = LayoutInflater.from(context).inflate(layoutId, null);
+        controlView.addView(view);
+        setContentView(controlView);
         init();
 
     }
 
     private void init() {
         setCanceledOnTouchOutside(true);
-        getWindow().setBackgroundDrawable(getRoundRectDrawable(dp2px(context, 5), Color.WHITE));
+        getWindow().setBackgroundDrawable(getRoundRectDrawable(dp2px(context, 5), Color.TRANSPARENT));
 
         width = (int)(ScreenUtils.getWidthPixels(context)*0.8);
         height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -167,7 +168,8 @@ public class LDialog extends Dialog{
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置背景>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     private LDialog setBg(){
-        getWindow().setBackgroundDrawable(getRoundRectDrawable(bgRadius, bgColor));
+//        getWindow().setBackgroundDrawable(getRoundRectDrawable(bgRadius, bgColor));
+        controlView.setBackground(getRoundRectDrawable(bgRadius, bgColor));
         return this;
     }
 
@@ -175,13 +177,13 @@ public class LDialog extends Dialog{
      * 设置背景颜色
      * @return
      */
-    public LDialog setBgColor(int color){
+    public LDialog setBgColor(@ColorInt int color){
         bgColor = color;
         return setBg();
     }
 
-    public LDialog setBgColorRes(int colorRes){
-        bgColor = context.getResources().getColor(colorRes);
+    public LDialog setBgColorRes(@ColorRes int colorRes){
+        controlView.setBackgroundResource(colorRes);
         return setBg();
     }
 
@@ -207,7 +209,7 @@ public class LDialog extends Dialog{
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置宽高>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     /**
-     * 设置宽高
+     * 设置宽高(精确)
      */
     private LDialog setWidthHeight(){
 //        Window dialogWindow = getWindow();
@@ -215,13 +217,18 @@ public class LDialog extends Dialog{
 //        lp.width = width;
 //        lp.height = height;
 //        dialogWindow.setAttributes(lp);
-        ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = controlView.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
-        rootView.setLayoutParams(layoutParams);
+        controlView.setLayoutParams(layoutParams);
         return this;
     }
 
+    /**
+     * 精确宽
+     * @param width
+     * @return
+     */
     public LDialog setWidth(int width){
         this.width = dp2px(context, width);
         return setWidthHeight();
@@ -232,6 +239,41 @@ public class LDialog extends Dialog{
         return setWidthHeight();
     }
 
+    /**
+     * 最大宽
+     * @param width
+     * @return
+     */
+    public LDialog setMaxWidth(int width){
+        setMaxWidthPX(dp2px(context, width));
+        return this;
+    }
+    public LDialog setMaxWidthPX(int width){
+        controlView.setMaxWidth(width);
+        return this;
+    }
+
+    /**
+     * 最小宽
+     * @param width
+     * @return
+     */
+    public LDialog setMinWidth(int width){
+        setMinWidthPX(dp2px(context, width));
+        return this;
+    }
+    public LDialog setMinWidthPX(int width){
+        controlView.setMinimumWidth(width);
+        return this;
+    }
+
+
+
+    /**
+     * 精确高度
+     * @param height
+     * @return
+     */
     public LDialog setHeight(int height){
         this.height = dp2px(context, height);
         return setWidthHeight();
@@ -242,6 +284,35 @@ public class LDialog extends Dialog{
     }
 
     /**
+     * 最大高度
+     * @param height
+     * @return
+     */
+    public LDialog setMaxHeight(int height){
+        setMaxHeightPX(dp2px(context, height));
+        return this;
+    }
+    public LDialog setMaxHeightPX(int height){
+        controlView.setMaxHeight(height);
+        return this;
+    }
+
+    /**
+     * 最小高度
+     * @param height
+     * @return
+     */
+    public LDialog setMinHeight(int height){
+        setMinHeightPX(dp2px(context, height));
+        return this;
+    }
+    public LDialog setMinHeightPX(int height){
+        controlView.setMaxHeight(height);
+        return this;
+    }
+
+
+    /**
      * 设置宽占屏幕的比例
      * @param widthRatio
      */
@@ -249,6 +320,12 @@ public class LDialog extends Dialog{
         width = (int)(ScreenUtils.getWidthPixels(context)*widthRatio);
         setWidthHeight();
         return this;
+    }
+    public LDialog setMaxWidthRatio(double widthRatio){
+        return setMaxWidthPX((int)(ScreenUtils.getWidthPixels(context)*widthRatio));
+    }
+    public LDialog setMinWidthRatio(double widthRatio){
+        return setMinWidthPX((int)(ScreenUtils.getWidthPixels(context)*widthRatio));
     }
 
     /**
@@ -259,6 +336,12 @@ public class LDialog extends Dialog{
         height = (int)(ScreenUtils.getHeightPixels(context)*heightRatio);
         setWidthHeight();
         return this;
+    }
+    public LDialog setMaxHeightRatio(double heightRatio){
+        return setMaxHeightPX((int)(ScreenUtils.getWidthPixels(context)*heightRatio));
+    }
+    public LDialog setMinHeightRatio(double heightRatio){
+        return setMinHeightPX((int)(ScreenUtils.getWidthPixels(context)*heightRatio));
     }
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置监听>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -312,8 +395,7 @@ public class LDialog extends Dialog{
         return this;
     }
 
-
-//    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置常见属性>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置常见属性>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     @SuppressWarnings("unchecked")
     public <T extends View> T getView(@IdRes int viewId) {
@@ -341,6 +423,22 @@ public class LDialog extends Dialog{
     public LDialog setText(@IdRes int viewId, @StringRes int strId) {
         TextView view = getView(viewId);
         view.setText(strId);
+        return this;
+    }
+
+    /**
+     * 设置文字大小
+     * @param viewId
+     * @param size (单位：SP)
+     * @return
+     */
+    public LDialog setTextSize(@IdRes int viewId, float size) {
+        setTextSizePX(viewId, sp2px(context, size));
+        return this;
+    }
+    public LDialog setTextSizePX(@IdRes int viewId, float size) {
+        TextView view = getView(viewId);
+        view.setTextSize(sp2px(context, size));
         return this;
     }
 
@@ -483,6 +581,10 @@ public class LDialog extends Dialog{
     /** dp转px */
     public static int dp2px(Context context, float dpVal){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpVal, context.getResources().getDisplayMetrics());
+    }
+    /** sp转px */
+    public static int sp2px(Context context, float spVal){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,spVal, context.getResources().getDisplayMetrics());
     }
 
     public interface DialogOnClickListener{
