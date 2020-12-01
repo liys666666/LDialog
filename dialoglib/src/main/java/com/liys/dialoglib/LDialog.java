@@ -32,9 +32,9 @@ import java.util.List;
  * @Description: 万能Dialog
  * @Author: liys
  * @CreateDate: 2020/1/8 15:07
- * @UpdateUser: 更新者
- * @UpdateDate: 2020/1/8 15:07
- * @UpdateRemark: 更新说明
+ * @UpdateUser: liys
+ * @UpdateDate: 2020/12/1 18:00
+ * @UpdateRemark: 更新版本: V2.0.1  https://www.jianshu.com/p/4ab3462b3056
  * @Version: 1.0
  */
 public class LDialog extends AppCompatDialog{
