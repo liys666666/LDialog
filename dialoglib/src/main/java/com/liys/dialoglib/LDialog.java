@@ -1,6 +1,5 @@
 package com.liys.dialoglib;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,6 +14,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatDialog;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,7 +37,7 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class LDialog extends Dialog{
+public class LDialog extends AppCompatDialog{
 
     protected Context context;
     protected SparseArray<View> views = new SparseArray<>();
