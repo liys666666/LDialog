@@ -7,8 +7,24 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="从下弹出"/>
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从左弹出"/>
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="缩放"/>
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下到中间"/>
 
 </LinearLayout>
