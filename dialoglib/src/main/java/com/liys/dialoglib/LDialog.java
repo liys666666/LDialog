@@ -13,6 +13,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Size;
 import android.support.annotation.StringRes;
 import android.util.SparseArray;
 import android.util.TypedValue;
@@ -38,28 +39,43 @@ import java.util.List;
  */
 public class LDialog extends Dialog{
 
-    private Context context;
-    private SparseArray<View> views = new SparseArray<>();
-    private List<Integer> cancelIds = new ArrayList<>();
-    private LDialogRootView controlView;
-    private int layoutId = 0;
-    private int width = 0;
-    private int height = 0;
-    private int bgRadius = 0; //背景圆角
-    private int bgColor = Color.WHITE; //背景颜色
+    protected Context context;
+    protected SparseArray<View> views = new SparseArray<>();
+    protected List<Integer> cancelIds = new ArrayList<>();
+    protected LDialogRootView controlView;
+    protected int layoutId = 0;
+    protected int width = 0;
+    protected int height = 0;
 
-    public LDialog(@NonNull Context context) {
+    protected BgBean bgBean = new BgBean(); //背景属性对象
+
+    private LDialog(@NonNull Context context) {
         this(context, R.layout.dialog_confirm);
     }
 
-    public LDialog(@NonNull Context context, int layoutId) {
+    private LDialog(@NonNull Context context, int layoutId) {
         this(context, layoutId, R.style.LDialog);
     }
 
-    public LDialog(@NonNull Context context, int layoutId, int themeResId) {
+    private LDialog(@NonNull Context context, int layoutId, int themeResId) {
         super(context, themeResId);
         this.context = context;
         this.layoutId = layoutId;
+    }
+
+    /**
+     * 获取对象
+     * @param context
+     * @return
+     */
+    public static LDialog newInstance(@NonNull Context context){
+        return new LDialog(context).with();
+    }
+    public static LDialog newInstance(@NonNull Context context, int layoutId){
+        return new LDialog(context, layoutId).with();
+    }
+    public static LDialog newInstance(@NonNull Context context, int layoutId, int themeResId){
+        return new LDialog(context, layoutId, themeResId).with();
     }
 
     @Override
@@ -70,12 +86,11 @@ public class LDialog extends Dialog{
         controlView.addView(view);
         setContentView(controlView);
         init();
-
     }
 
-    private void init() {
+    protected void init() {
         setCanceledOnTouchOutside(true);
-        getWindow().setBackgroundDrawable(getRoundRectDrawable(dp2px(context, 5), Color.TRANSPARENT));
+        getWindow().setBackgroundDrawable(getRoundRectDrawable(dp2px(context, 0), Color.TRANSPARENT));
 
         width = (int)(ScreenUtils.getWidthPixels(context)*0.8);
         height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -84,7 +99,7 @@ public class LDialog extends Dialog{
 //        getWindow().setWindowAnimations(R.style.dialog_translate);
     }
 
-    public LDialog with(){
+    protected LDialog with(){
         show();
         dismiss();
         return this;
@@ -167,9 +182,14 @@ public class LDialog extends Dialog{
     }
 
 //    >>>>>>>>>>>>>>>>>>>>>>>>>>>>设置背景>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    private LDialog setBg(){
+
+    /**
+     * 刷新背景
+     * @return
+     */
+    protected LDialog refreshBg(){
 //        getWindow().setBackgroundDrawable(getRoundRectDrawable(bgRadius, bgColor));
-        controlView.setBackground(getRoundRectDrawable(bgRadius, bgColor));
+        controlView.setBackground(bgBean.getRoundRectDrawable());
         return this;
     }
 
@@ -178,22 +198,72 @@ public class LDialog extends Dialog{
      * @return
      */
     public LDialog setBgColor(@ColorInt int color){
-        bgColor = color;
-        return setBg();
+        bgBean.color = color;
+        return refreshBg();
+    }
+    public LDialog setBgColor(@Size(min=1) String colorString){
+        bgBean.color = Color.parseColor(colorString);
+        return refreshBg();
+    }
+
+    /**
+     * 渐变背景
+     * @param orientation
+     * @param colors
+     * @return
+     */
+    public LDialog setBgColor(GradientDrawable.Orientation orientation, @ColorInt int... colors){
+        bgBean.gradientsOrientation = orientation;
+        bgBean.gradientsColors = colors;
+        return refreshBg();
+    }
+    public LDialog setBgColor(GradientDrawable.Orientation orientation, @Size(min=1) String... colorStrings){
+        bgBean.gradientsOrientation = orientation;
+        if(colorStrings==null){
+            return this;
+        }
+        bgBean.gradientsColors = new int[colorStrings.length];
+        for (int i = 0; i < bgBean.gradientsColors.length; i++) {
+            bgBean.gradientsColors[i] = Color.parseColor(colorStrings[i]);
+        }
+        return refreshBg();
     }
 
     public LDialog setBgColorRes(@ColorRes int colorRes){
-        controlView.setBackgroundResource(colorRes);
-        return setBg();
+        bgBean.color = context.getResources().getColor(colorRes);
+        return refreshBg();
+    }
+    public LDialog setBgColorRes(GradientDrawable.Orientation orientation, @Size(min=1) String... colorRes){
+        bgBean.gradientsOrientation = orientation;
+        bgBean.gradientsColors = new int[colorRes.length];
+        for (int i = 0; i < colorRes.length; i++) {
+            bgBean.gradientsColors[i] = Color.parseColor(colorRes[i]);
+        }
+        return refreshBg();
+    }
+    public LDialog setBgColorRes(GradientDrawable.Orientation orientation, @ColorRes int... colorRes){
+        bgBean.gradientsOrientation = orientation;
+        bgBean.gradientsColors = new int[colorRes.length];
+        for (int i = 0; i < colorRes.length; i++) {
+            bgBean.gradientsColors[i] = getColor(colorRes[i]);
+        }
+        return refreshBg();
     }
 
     /**
      *  设置背景圆角
      * @param bgRadius
      */
-    public LDialog setBgRadius(int bgRadius){
-        this.bgRadius = dp2px(context, bgRadius);
-        return setBg();
+    public LDialog setBgRadius(float bgRadius){
+        setBgRadius(bgRadius, bgRadius, bgRadius, bgRadius);
+        return refreshBg();
+    }
+    public LDialog setBgRadius(float left_top_radius, float right_top_radius, float right_bottom_radius, float left_bottom_radius){
+        bgBean.left_top_radius = dp2px(context, left_top_radius);
+        bgBean.right_top_radius = dp2px(context, right_top_radius);
+        bgBean.right_bottom_radius = dp2px(context, right_bottom_radius);
+        bgBean.left_bottom_radius = dp2px(context, left_bottom_radius);
+        return refreshBg();
     }
 
     /**
@@ -201,8 +271,15 @@ public class LDialog extends Dialog{
      * @param bgRadius
      */
     public LDialog setBgRadiusPX(int bgRadius){
-        this.bgRadius = bgRadius;
-        return setBg();
+        setBgRadiusPX(bgRadius, bgRadius, bgRadius, bgRadius);
+        return refreshBg();
+    }
+    public LDialog setBgRadiusPX(float left_top_radius, float right_top_radius, float right_bottom_radius, float left_bottom_radius){
+        bgBean.left_top_radius = left_top_radius;
+        bgBean.right_top_radius = right_top_radius;
+        bgBean.right_bottom_radius = right_bottom_radius;
+        bgBean.left_bottom_radius = left_bottom_radius;
+        return refreshBg();
     }
 
 
@@ -484,8 +561,6 @@ public class LDialog extends Dialog{
     /**
      * Will set text color of a TextView.
      *
-     * @param viewId    The view id.
-     * @param textColor The text color (not a resource id).
      * @return The BaseViewHolder for chaining.
      */
     public LDialog setTextColor(@IdRes int viewId, @ColorInt int textColor) {
@@ -568,6 +643,14 @@ public class LDialog extends Dialog{
         drawable.setColor(color!=0 ? color : Color.TRANSPARENT);
         return drawable;
     }
+//    public static GradientDrawable getRoundRectDrawable(int radius, int color){
+//        //左上、右上、右下、左下的圆角半径
+//        float[] radiuss = {radius, radius, radius, radius, radius, radius, radius, radius};
+//        GradientDrawable drawable = new GradientDrawable();
+//        drawable.setCornerRadii(radiuss);
+//        drawable.setColor(color!=0 ? color : Color.TRANSPARENT);
+//        return drawable;
+//    }
 //    public static GradientDrawable getRoundRectDrawable(int radius, int color, boolean isFill, int strokeWidth){
 //        //左上、右上、右下、左下的圆角半径
 //        float[] radiuss = {radius, radius, radius, radius, radius, radius, radius, radius};
@@ -577,6 +660,10 @@ public class LDialog extends Dialog{
 //        drawable.setStroke(isFill ? 0 : strokeWidth, color);
 //        return drawable;
 //    }
+
+    public int getColor(int colorResId){
+        return context.getResources().getColor(colorResId);
+    }
 
     /** dp转px */
     public static int dp2px(Context context, float dpVal){
