@@ -23,14 +23,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         LDialog.newInstance(this, R.layout.dialog_confirm2) //设置你的布局
-                .setGravity(Gravity.CENTER)
+                .setGravity(Gravity.BOTTOM)
                 .setAnimations(LAnimationsType.BOTTOM)
-//                .setWidthRatio(1)
+                .setWidthRatio(1)
                 .setBgColor(Color.WHITE)
                 .setBgColor(GradientDrawable.Orientation.BOTTOM_TOP, "#00FEE9", "#008EB4")
-                .setBgRadius(10, 10, 0, 0)
-                .setMinHeight(200)
-                .setMaxHeight(400)
+//                .setBgRadius(10, 10, 0, 0)
+                .setMinHeight(500)
+//                .setMaxHeight(400)
                 //.setAnimationsStyle(R.style.dialog_translate)
                 .setMaskValue(0.5f)
                 //设置布局控件的值

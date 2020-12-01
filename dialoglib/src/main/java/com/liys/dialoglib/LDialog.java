@@ -384,7 +384,7 @@ public class LDialog extends Dialog{
         return this;
     }
     public LDialog setMinHeightPX(int height){
-        controlView.setMaxHeight(height);
+        controlView.setMinimumHeight(height);
         return this;
     }
 
