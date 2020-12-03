@@ -11,6 +11,7 @@ allprojects {
 ```
 ```aidl
 dependencies {
+    //如果项目是support包，可以使用V2.0.1版本
      implementation 'com.github.liys666666:LDialog:V2.1.0'  //添加
 }
 ```
