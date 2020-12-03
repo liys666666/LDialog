@@ -7,14 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Size;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatDialog;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -28,6 +20,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Size;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatDialog;
+
 /**
  * @Description: 万能Dialog
  * @Author: liys
@@ -37,7 +38,7 @@ import java.util.List;
  * @UpdateRemark: 更新版本: V2.0.1  https://www.jianshu.com/p/4ab3462b3056
  * @Version: 1.0
  */
-public class LDialog extends AppCompatDialog{
+public class LDialog extends AppCompatDialog {
 
     protected Context context;
     protected SparseArray<View> views = new SparseArray<>();

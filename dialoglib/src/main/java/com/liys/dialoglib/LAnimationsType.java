@@ -1,10 +1,11 @@
 package com.liys.dialoglib;
 
-import android.support.annotation.StringDef;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import androidx.annotation.StringDef;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
