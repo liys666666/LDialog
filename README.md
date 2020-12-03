@@ -11,7 +11,7 @@ allprojects {
 ```
 ```aidl
 dependencies {
-     implementation 'com.github.liys666666:LDialog:V1.0.4'  //添加
+     implementation 'com.github.liys666666:LDialog:V2.1.0'  //添加
 }
 ```
 
