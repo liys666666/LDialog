@@ -20,10 +20,10 @@
         android:textColor="#333333"
         android:textSize="10sp"
         android:text="确认退出吗"/>
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="123456"/>-->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="123456"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

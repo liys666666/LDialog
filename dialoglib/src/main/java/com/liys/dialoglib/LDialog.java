@@ -191,6 +191,11 @@ public class LDialog extends AppCompatDialog {
     protected LDialog refreshBg(){
 //        getWindow().setBackgroundDrawable(getRoundRectDrawable(bgRadius, bgColor));
         controlView.setBackground(bgBean.getRoundRectDrawable());
+        controlView.setBgRadius(
+                bgBean.left_top_radius,
+                bgBean.right_top_radius,
+                bgBean.right_bottom_radius,
+                bgBean.left_bottom_radius);
         return this;
     }
 
