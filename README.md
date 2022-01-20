@@ -12,7 +12,7 @@ allprojects {
 ```aidl
 dependencies {
     //如果项目是support包，可以使用V2.0.1版本
-     implementation 'com.github.liys666666:LDialog:V2.1.1'  //添加
+     implementation 'com.github.liys666666:LDialog:V2.1.2'  //添加
 }
 ```
 
@@ -85,6 +85,7 @@ LDialog dialog = LDialog.newInstance(this, R.layout.dialog_confirm);
                 .setVisible()
                 .setGone()
                 //6.2 其它属性
+                .setOnTouchOutside(true) //点击空白消失
                 .setCancelBtn(R.id.tv_cancel, R.id.tv_confirm) //设置按钮，点击弹框消失(可以传多个)
                 .setOnClickListener(new LDialog.DialogOnClickListener() { //设置按钮监听
                     @Override
