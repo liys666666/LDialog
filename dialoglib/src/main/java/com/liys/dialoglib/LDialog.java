@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -83,26 +84,38 @@ public class LDialog extends AppCompatDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         controlView = new LDialogRootView(context);
-        View view = LayoutInflater.from(context).inflate(layoutId, null);
+        View view = LayoutInflater.from(context).inflate(layoutId, controlView, false);
         controlView.addView(view);
         setContentView(controlView);
+        //判断xml根布局, 宽高
+        ViewGroup.LayoutParams xmlLp = view.getLayoutParams();
+        //window窗口
+        WindowManager.LayoutParams windowLP = getWindow().getAttributes();
+        windowLP.width = xmlLp.width;
+        windowLP.height = xmlLp.height;
+        getWindow().setAttributes(windowLP);
+        //controlView宽高
+        ViewGroup.LayoutParams controlLP = controlView.getLayoutParams();
+        controlLP.width = xmlLp.width;
+        controlLP.height = xmlLp.height;
+        controlView.setLayoutParams(controlLP);
         init();
     }
 
     protected void init() {
         setCanceledOnTouchOutside(true);
         getWindow().setBackgroundDrawable(getRoundRectDrawable(dp2px(context, 0), Color.TRANSPARENT));
-
-        width = (int)(ScreenUtils.getWidthPixels(context)*0.8);
-        height = WindowManager.LayoutParams.WRAP_CONTENT;
-        setWidthHeight();
         getWindow().setWindowAnimations(R.style.li_dialog_default);
-//        getWindow().setWindowAnimations(R.style.dialog_translate);
     }
 
     protected LDialog with(){
         show();
         dismiss();
+        return this;
+    }
+
+    public LDialog setOnTouchOutside(boolean cancel){
+        super.setCancelable(cancel);
         return this;
     }
 
