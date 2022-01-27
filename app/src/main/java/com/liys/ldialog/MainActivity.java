@@ -1,14 +1,11 @@
 package com.liys.ldialog;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 
-import com.liys.dialoglib.LAnimationsType;
 import com.liys.dialoglib.LDialog;
+import com.liys.dialoglib.LDialog2;
+import com.liys.ldialog.databinding.DialogConfirm2Binding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,46 +23,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        LDialog dialog = LDialog.newInstance(this, R.layout.dialog_confirm2) //设置你的布局
-                .setGravity(Gravity.BOTTOM)
-                .setAnimations(LAnimationsType.BOTTOM)
-//                .setWidthRatio(1)
-                .setBgColor(Color.WHITE)
-                .setBgColor(GradientDrawable.Orientation.BOTTOM_TOP, "#00FEE9", "#008EB4")
-                .setBgRadius(10, 10, 0, 0)
-//                .setWidth(200)
-//                .setMaxHeight(400)
-                //.setAnimationsStyle(R.style.dialog_translate)
-                .setMaskValue(0.5f)
-                //设置布局控件的值
-                .setText(R.id.tv_content, "确定要退出登录吗？>>>>>>>>>>>")
-                .setCancelBtn(R.id.tv_cancel, R.id.tv_confirm)
-                .setOnClickListener(new LDialog.DialogOnClickListener() {
-                    @Override
-                    public void onClick(View v, LDialog lDialog) { //可以根据viewId判断
-                        Log.d("66", "点击");
-                    }
-                }, R.id.tv_confirm, R.id.tv_content); //可以设多控件
-        switch (v.getId()){
-            case R.id.btn1:
-                dialog.setGravity(Gravity.BOTTOM)
-                        .setAnimations(LAnimationsType.BOTTOM);
-                break;
-            case R.id.btn2:
-                dialog.setGravity(Gravity.CENTER)
-                        .setAnimations(LAnimationsType.LEFT);
-                break;
-            case R.id.btn3:
-                dialog.setGravity(Gravity.CENTER)
-                        .setAnimations(LAnimationsType.SCALE);
-                break;
-            case R.id.btn4:
-                dialog.setGravity(Gravity.CENTER)
-                        .setAnimations(LAnimationsType.BOTTOM);
-                break;
-        }
+        LDialog2 dialog2 = new LDialog2.Builder(this)
+                //
+//                .setLayout(R.layout.dialog_confirm2)
+                .setBinding(DialogConfirm2Binding.class)
+                .build();
+        DialogConfirm2Binding binding = dialog2.getBinding();
+        binding.tvTitle.setText( "66666");
+        dialog2.show();
 
-        dialog.show();
+
+        LDialog dialog = LDialog.newInstance(this, DialogConfirm2Binding.class); //设置你的布局
+//                .setCancelBtn(R.id.tv_cancel, R.id.tv_confirm);
+//        binding.tvConfirm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+//        LDialog dialog = LDialog.newInstance(this, R.layout.dialog_confirm2) //设置你的布局
+//                .setGravity(Gravity.BOTTOM)
+//                .setAnimations(LAnimationsType.BOTTOM)
+////                .setWidthRatio(1)
+//                .setBgColor(Color.WHITE)
+//                .setBgColor(GradientDrawable.Orientation.BOTTOM_TOP, "#00FEE9", "#008EB4")
+//                .setBgRadius(10, 10, 0, 0)
+////                .setWidth(200)
+////                .setMaxHeight(400)
+//                //.setAnimationsStyle(R.style.dialog_translate)
+//                .setMaskValue(0.5f)
+//                //设置布局控件的值
+//                .setText(R.id.tv_content, "确定要退出登录吗？>>>>>>>>>>>")
+//                .setCancelBtn(R.id.tv_cancel, R.id.tv_confirm)
+//                .setOnClickListener(new LDialog.DialogOnClickListener() {
+//                    @Override
+//                    public void onClick(View v, LDialog lDialog) { //可以根据viewId判断
+//                        Log.d("66", "点击");
+//                    }
+//                }, R.id.tv_confirm, R.id.tv_content); //可以设多控件
+//        switch (v.getId()){
+//            case R.id.btn1:
+//                dialog.setGravity(Gravity.BOTTOM)
+//                        .setAnimations(LAnimationsType.BOTTOM);
+//                break;
+//            case R.id.btn2:
+//                dialog.setGravity(Gravity.CENTER)
+//                        .setAnimations(LAnimationsType.LEFT);
+//                break;
+//            case R.id.btn3:
+//                dialog.setGravity(Gravity.CENTER)
+//                        .setAnimations(LAnimationsType.SCALE);
+//                break;
+//            case R.id.btn4:
+//                dialog.setGravity(Gravity.CENTER)
+//                        .setAnimations(LAnimationsType.BOTTOM);
+//                break;
+//        }
+
+//        dialog.show();
 //        test();
     }
 

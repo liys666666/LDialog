@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,46 +47,84 @@ public class LDialog extends AppCompatDialog {
     protected SparseArray<View> views = new SparseArray<>();
     protected List<Integer> cancelIds = new ArrayList<>();
     protected LDialogRootView controlView;
+    protected View view;
+    protected Object binding;
     protected int layoutId = 0;
     protected int width = 0;
     protected int height = 0;
 
     protected BgBean bgBean = new BgBean(); //背景属性对象
 
-    private LDialog(@NonNull Context context) {
+//    ---------------------------layoutId构造----------------------------
+    protected LDialog(@NonNull Context context) {
         this(context, R.layout.dialog_confirm);
     }
-
-    private LDialog(@NonNull Context context, int layoutId) {
+    protected LDialog(@NonNull Context context, int layoutId) {
         this(context, layoutId, R.style.LDialog);
     }
-
-    private LDialog(@NonNull Context context, int layoutId, int themeResId) {
+    protected LDialog(@NonNull Context context, int layoutId, int themeResId) {
         super(context, themeResId);
         this.context = context;
         this.layoutId = layoutId;
     }
-
-    /**
-     * 获取对象
-     * @param context
-     * @return
-     */
+    //-----------------------------获取对象---------------------------------
     public static LDialog newInstance(@NonNull Context context){
         return new LDialog(context).with();
     }
     public static LDialog newInstance(@NonNull Context context, int layoutId){
         return new LDialog(context, layoutId).with();
     }
+
     public static LDialog newInstance(@NonNull Context context, int layoutId, int themeResId){
         return new LDialog(context, layoutId, themeResId).with();
     }
 
+
+//    ---------------------------View构造----------------------------
+    protected LDialog(@NonNull Context context, View view) {
+        this(context, view, R.style.LDialog);
+    }
+
+    protected LDialog(@NonNull Context context, View view, int themeResId) {
+        super(context, themeResId);
+        this.context = context;
+        this.view = view;
+    }
+
+    //-----------------------------获取对象---------------------------------
+    public static LDialog newInstance(@NonNull Context context, View view){
+        return new LDialog(context, view).with();
+    }
+
+    public static LDialog newInstance(@NonNull Context context, Class<?> bindingClazz){
+        View view = null;
+        try {
+            Method method = bindingClazz.getMethod("inflate", LayoutInflater.class, ViewGroup.class, boolean.class);
+            Object binding = method.invoke(null, LayoutInflater.from(context), new LinearLayout(context), false);
+            Method methodGetRoot = binding.getClass().getMethod("getRoot");
+            view = (View)methodGetRoot.invoke(binding);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.d("66", "onCreate");
+        return new LDialog(context, view).with();
+    }
+
+//    public <T> T getBinding(){
+//        return
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("66", "onCreate");
         controlView = new LDialogRootView(context);
-        View view = LayoutInflater.from(context).inflate(layoutId, controlView, false);
+        if(layoutId!=0){
+            view = LayoutInflater.from(context).inflate(layoutId, controlView, false);
+        }
+        if(view==null){
+            throw new RuntimeException("找不到View");
+        }
         controlView.addView(view);
         setContentView(controlView);
         //判断xml根布局, 宽高
