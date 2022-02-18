@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
@@ -21,10 +19,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    buildFeatures{
-        viewBinding = true
     }
 }
 

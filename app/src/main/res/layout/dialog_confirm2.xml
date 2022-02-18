@@ -24,6 +24,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:focusable="false"
         android:hint="123456"/>
     <RelativeLayout
         android:layout_width="match_parent"

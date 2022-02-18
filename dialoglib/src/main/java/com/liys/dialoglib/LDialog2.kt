@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialog
-import androidx.viewbinding.ViewBinding
 import com.liys.dialoglib.LAnimationsType.AAnimationsType
 
 /**
@@ -25,14 +24,19 @@ import com.liys.dialoglib.LAnimationsType.AAnimationsType
  */
 open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, builder.themeResId){
 
+    var binding:Any? = null
+
+    init {
+        binding = builder.binding
+    }
 
     //开始构建
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //添加布局
         builder.controlView.addView(builder.userView)
         setContentView(builder.controlView)
+
 
 //---------------------------设置宽高--------------------------------------------
         //判断xml根布局, 宽高
@@ -75,12 +79,6 @@ open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, build
     }
 
 
-    fun <T : ViewBinding> getBinding():T{
-        return builder.binding as T
-    }
-
-
-
 //------------------------建造者模式------------------------------
     open class Builder(var context: Context) {
         //背景、圆角 ---> 暂不处理
@@ -91,7 +89,7 @@ open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, build
         //View布局
         var controlView:LDialogRootView = LDialogRootView(context)
         var userView:View?=null //用户定义的View
-        var binding:ViewBinding?=null
+        var binding:Any?=null //binding
 
         //宽高---精确值
         var width = 0 //
@@ -129,8 +127,8 @@ open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, build
         }
         fun setBinding(bindingClazz: Class<*>):Builder{
             var inflate = bindingClazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
-            binding = inflate.invoke(null, LayoutInflater.from(context), controlView, false) as ViewBinding
-            userView = binding!!.root
+            binding = inflate.invoke(null, LayoutInflater.from(context), controlView, false)
+            userView = binding?.javaClass?.getMethod("getRoot")?.invoke(binding) as View
             return this
         }
 
@@ -253,10 +251,11 @@ open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, build
         }
 
 // --------------------------------设置位置---------------------------------------
-        fun setGravity(gravity: Int, offX: Int = 0, offY: Int = 0){
+        fun setGravity(gravity: Int, offX: Int = 0, offY: Int = 0):Builder{
             this.gravity = gravity
             this.offX = offY
             this.offY = offY
+            return this
         }
 
 // --------------------------------遮罩透明度---------------------------------------

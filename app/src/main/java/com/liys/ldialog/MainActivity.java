@@ -1,8 +1,11 @@
 package com.liys.ldialog;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
+import com.liys.dialoglib.LAnimationsType;
 import com.liys.dialoglib.LDialog;
 import com.liys.dialoglib.LDialog2;
 import com.liys.ldialog.databinding.DialogConfirm2Binding;
@@ -24,16 +27,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         LDialog2 dialog2 = new LDialog2.Builder(this)
-                //
-//                .setLayout(R.layout.dialog_confirm2)
                 .setBinding(DialogConfirm2Binding.class)
+                .setGravity(Gravity.BOTTOM, 0, 0)
+                .setAnimations(LAnimationsType.BOTTOM)
                 .build();
-        DialogConfirm2Binding binding = dialog2.getBinding();
+        DialogConfirm2Binding binding = (DialogConfirm2Binding)dialog2.getBinding();
         binding.tvTitle.setText( "66666");
         dialog2.show();
 
 
-        LDialog dialog = LDialog.newInstance(this, DialogConfirm2Binding.class); //设置你的布局
+//        LDialog dialog = LDialog.newInstance(this, DialogConfirm2Binding.class); //设置你的布局
 //                .setCancelBtn(R.id.tv_cancel, R.id.tv_confirm);
 //        binding.tvConfirm.setOnClickListener(new View.OnClickListener() {
 //            @Override
