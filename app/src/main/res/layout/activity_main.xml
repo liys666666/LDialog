@@ -25,6 +25,6 @@
         android:id="@+id/btn4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="下到中间"/>
+        android:text="从右弹出"/>
 
 </LinearLayout>

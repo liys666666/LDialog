@@ -31,16 +31,33 @@ class KtActivity:AppCompatActivity() , View.OnClickListener{
 
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
+        var dBinding:DialogConfirm2Binding
         val dialog2 = LDialog2.Builder(this).apply {
             setBinding(DialogConfirm2Binding::class.java)
-            setGravity(Gravity.BOTTOM, 0, 0)
-            setAnimations(LAnimationsType.BOTTOM)
 
+            when(v.id){
+                R.id.btn1->{
+                    setGravity(Gravity.BOTTOM, 0, 0)
+                    setAnimations(LAnimationsType.BOTTOM)
+                }
+                R.id.btn2->{
+                    setGravity(Gravity.LEFT, 0, 0)
+                    setAnimations(LAnimationsType.LEFT)
+                }
+                R.id.btn3->{
+                    setGravity(Gravity.CENTER, 0, 0)
+                    setAnimations(LAnimationsType.SCALE)
+                }
+                R.id.btn4->{
+                    setGravity(Gravity.RIGHT, 0, 0)
+                    setAnimations(LAnimationsType.RIGHT)
+                }
+            }
+            dBinding = binding as DialogConfirm2Binding
         }
             .build()
-        val binding = dialog2.binding as DialogConfirm2Binding
-        binding.tvTitle.text = "66666"
+        dBinding.tvTitle.text = "66666"
         dialog2.show()
     }
 }
