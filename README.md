@@ -1,22 +1,52 @@
 
-#使用详情:[https://www.jianshu.com/p/4ab3462b3056](https://www.jianshu.com/p/4ab3462b3056)
-```aidl
-//项目根目录下 build.gradle
-allprojects {
-        repositories {
-            ...
-            maven { url 'https://jitpack.io' } //添加
-        }
+# LDialog
+
+使用详情：[https://www.jianshu.com/p/4ab3462b3056](https://www.jianshu.com/p/4ab3462b3056)
+
+## 版本兼容性
+
+| 版本线 | minSdk | 维护方向 |
+| --- | ---: | --- |
+| V2.x | 19 | 旧项目兼容，现有版本继续可用 |
+| V3.x | 21 | 现代 Android 项目的主要维护版本 |
+
+V3 使用 AGP 8.10.1、Gradle 8.11.1 和 JDK 17 构建，但使用方不需要采用完全相同的 Gradle 版本。使用方需要满足 V3 的 `minSdk 21`，并能够解析 Kotlin 2.1.20 和 AndroidX AppCompat 1.7.1。
+
+V3 以 [Gitee](https://gitee.com/liys666666/LDialog) 为主仓库和 JitPack 构建源；GitHub 仅作为延迟同步镜像。
+
+## 接入
+
+在项目的 `settings.gradle` 中添加 JitPack：
+
+```groovy
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri('https://jitpack.io') }
     }
-```
-```aidl
-dependencies {
-    //如果项目是support包，可以使用V2.0.1版本
-     implementation 'com.github.liys666666:LDialog:V2.1.2'  //添加
 }
 ```
 
+发布 `V3.0.0` Tag 后，现代项目使用：
+
+```groovy
+dependencies {
+    implementation 'com.gitee.liys666666:LDialog:V3.0.0'
+}
 ```
+
+仍需支持 API 19 的项目继续使用已有的 V2 历史坐标：
+
+```groovy
+dependencies {
+    implementation 'com.github.liys666666:LDialog:V2.1.2'
+}
+```
+
+## API 示例
+
+```java
 LDialog dialog = LDialog.newInstance(this, R.layout.dialog_confirm);
         dialog
                 .setMaskValue(0.5f) //遮罩--透明度(0-1)

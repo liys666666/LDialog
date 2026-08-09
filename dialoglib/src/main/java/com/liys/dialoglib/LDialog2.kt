@@ -50,10 +50,11 @@ open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, build
         }
         builder.userView!!.layoutParams = xmlLp
         //window窗口
-        val windowLP = window!!.attributes
+        val dialogWindow = requireNotNull(window)
+        val windowLP = dialogWindow.attributes
         windowLP.width = xmlLp.width
         windowLP.height = xmlLp.height
-        window!!.attributes = windowLP
+        dialogWindow.attributes = windowLP
         //controlView宽高
         val controlLP: ViewGroup.LayoutParams = builder.controlView.layoutParams
         controlLP.width = xmlLp.width
@@ -61,21 +62,21 @@ open class LDialog2(var builder: Builder):AppCompatDialog(builder.context, build
         builder.controlView.layoutParams = controlLP
 
         //显示位置
-        window.setGravity(builder.gravity)
-        val layoutParams = window.attributes
+        dialogWindow.setGravity(builder.gravity)
+        val layoutParams = dialogWindow.attributes
         layoutParams.x = builder.offX
         layoutParams.y = builder.offY
-        window.attributes = layoutParams
+        dialogWindow.attributes = layoutParams
 
         //其它
-        window.setWindowAnimations(builder.animationsStyle) //动画
-        window.setDimAmount(builder.maskValue)  //遮罩透明度
+        dialogWindow.setWindowAnimations(builder.animationsStyle) //动画
+        dialogWindow.setDimAmount(builder.maskValue)  //遮罩透明度
         setCanceledOnTouchOutside(builder.cancelable)  //点击取消
 
         //设置透明背景
         val drawable = GradientDrawable()
         drawable.setColor(Color.TRANSPARENT)
-        window.setBackgroundDrawable(drawable)
+        dialogWindow.setBackgroundDrawable(drawable)
     }
 
 

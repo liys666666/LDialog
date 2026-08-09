@@ -1,39 +1,50 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
 
 android {
-    compileSdkVersion 28
+    namespace 'com.liys.ldialog'
+    compileSdk 36
+
     defaultConfig {
-        applicationId "com.liys.customdialog"
-        minSdkVersion 19
-        targetSdkVersion 28
+        applicationId 'com.liys.customdialog'
+        minSdk 21
+        targetSdk 36
         versionCode 5
-        versionName "2.2.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName '2.2.1'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    buildFeatures{
-        viewBinding = true
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.0"
-    implementation 'androidx.core:core-ktx:1.3.2'
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
     implementation project(':dialoglib')
+    implementation libs.androidx.appcompat
+
+    testImplementation libs.junit4
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.androidx.test.espresso.core
 }
